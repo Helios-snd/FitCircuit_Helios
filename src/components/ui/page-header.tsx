@@ -10,8 +10,8 @@ export function PageHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
-        <Link href="/" className="flex items-center space-x-2">
-          <Dumbbell className="h-6 w-6 text-[#4CAF50]" />
+        <Link href="/" className="flex items-center space-x-2 pl-3">
+          <Dumbbell className="xh-6 w-6 text-[#4CAF50]" />
           <span className="font-bold">FitCircuit</span>
         </Link>
         <nav className="flex items-center space-x-6 ml-6">
@@ -51,7 +51,7 @@ export function PageHeader() {
             )}
           </div>
         </nav>
-        <div className="ml-auto flex items-center space-x-4 ">
+        <div className="ml-auto flex items-center space-x-4 ">  
           <Button className="bg-[#4CAF50] hover:bg-[#45a049]" variant="ghost" asChild>
             <Link href="/auth/login">Login</Link>
           </Button>
