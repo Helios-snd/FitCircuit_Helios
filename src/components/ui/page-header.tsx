@@ -51,11 +51,11 @@ export function PageHeader() {
             )}
           </div>
         </nav>
-        <div className="ml-auto flex items-center space-x-4">
-          <Button variant="ghost" asChild>
+        <div className="ml-auto flex items-center space-x-4 ">
+          <Button className="bg-[#4CAF50] hover:bg-[#45a049]" variant="ghost" asChild>
             <Link href="/auth/login">Login</Link>
           </Button>
-          <Button className="bg-[#4CAF50] hover:bg-[#45a049]" asChild>
+          <Button className="bg-[#4CAF50] hover:bg-[#45a049] hidden sm:block" asChild>
             <Link href="/auth/login?tab=register">Get Started</Link>
           </Button>
         </div>

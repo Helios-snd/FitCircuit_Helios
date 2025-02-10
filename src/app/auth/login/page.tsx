@@ -1,5 +1,6 @@
 "use client"
 
+import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { Dumbbell } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -7,6 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function Login() {
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get("tab") === "register" ? "register" : "login";
+
   return (
     <>
       <motion.div
@@ -16,7 +20,7 @@ export default function Login() {
         transition={{ duration: 0.5 }}
       >
         <div className="mx-auto w-full max-w-sm">
-          <Tabs defaultValue="login" className="w-full">
+          <Tabs defaultValue={defaultTab} className="w-full">
             <TabsList className="w-full mb-6">
               <TabsTrigger value="login" className="flex-1">
                 Login
@@ -87,4 +91,3 @@ export default function Login() {
     </>
   )
 }
-
