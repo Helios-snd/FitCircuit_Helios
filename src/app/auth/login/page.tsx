@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import { useSearchParams } from "next/navigation"
-import { motion } from "framer-motion"
-import { Dumbbell } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { Dumbbell } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const searchParams = useSearchParams();
-  const defaultTab = searchParams.get("tab") === "register" ? "register" : "login";
+  const initialTab = searchParams.get("tab") === "register" ? "register" : "login";
+  const [selectedTab, setSelectedTab] = useState(initialTab);
+
+  useEffect(() => {
+    setSelectedTab(initialTab); // Ensure sync when navigating
+  }, [initialTab]);
 
   return (
     <>
@@ -20,7 +26,7 @@ export default function Login() {
         transition={{ duration: 0.5 }}
       >
         <div className="mx-auto w-full max-w-sm">
-          <Tabs defaultValue={defaultTab} className="w-full">
+          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
             <TabsList className="w-full mb-6">
               <TabsTrigger value="login" className="flex-1">
                 Login
@@ -89,5 +95,5 @@ export default function Login() {
         </p>
       </motion.div>
     </>
-  )
+  );
 }
