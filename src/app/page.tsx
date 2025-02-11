@@ -77,7 +77,9 @@ export default function Home() {
             >
               Our Features
             </motion.h2>
+
             <div className="grid md:grid-cols-3 w-full gap-8 max-w-6xl mx-auto">
+
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
