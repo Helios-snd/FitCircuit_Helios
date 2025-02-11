@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { Dumbbell, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,29 +29,20 @@ export function PageHeader() {
             </button>
             {isDropdownOpen && (
               <div className="absolute left-0 mt-2 w-40 bg-white/80 backdrop-blur-md shadow-md rounded-lg border border-gray-200">
-                <Link
-                  href="/meal-plans/customize"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50"
-                >
+                <Link href="/meal-plans/customize" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50">
                   Meal Plans
                 </Link>
-                <Link
-                  href="/food-analysis"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50"
-                >
+                <Link href="/food-analysis" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50">
                   Food Analysis
                 </Link>
-                <Link
-                  href="/nutrition"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50"
-                >
+                <Link href="/nutrition" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200/50">
                   Nutrition
                 </Link>
               </div>
             )}
           </div>
         </nav>
-        <div className="ml-auto flex items-center space-x-4 ">  
+        <div className="ml-auto flex items-center space-x-4">  
           <Button className="bg-[#4CAF50] hover:bg-[#45a049]" variant="ghost" asChild>
             <Link href="/auth/login">Login</Link>
           </Button>

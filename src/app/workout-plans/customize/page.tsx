@@ -27,7 +27,7 @@ export default function CustomizeWorkoutPlan() {
           <Card>
             <CardContent className="p-6 space-y-6">
               <div>
-                <h2 className="font-semibold mb-4">What's your primary fitness goal?</h2>
+                <h2 className="font-semibold mb-4">What&apos;s your primary fitness goal?</h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {[
                     { icon: Dumbbell, title: "Weight Loss" },
