@@ -1,20 +1,19 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Dumbbell } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
+import { SignIn, SignUp } from "@clerk/nextjs";
 
-export default function Login() {
+function LoginComponent() {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") === "register" ? "register" : "login";
   const [selectedTab, setSelectedTab] = useState(initialTab);
 
   useEffect(() => {
-    setSelectedTab(initialTab); // Ensure sync when navigating
+    setSelectedTab(initialTab);
   }, [initialTab]);
 
   return (
@@ -36,46 +35,10 @@ export default function Login() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="login">
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <h1 className="text-2xl font-bold">Welcome to FitCircuit</h1>
-                  <p className="text-sm text-muted-foreground">Enter your credentials to access your account</p>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label htmlFor="username">Username</label>
-                    <Input id="username" placeholder="Enter your username" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="password">Password</label>
-                    <Input id="password" type="password" placeholder="Enter your password" />
-                  </div>
-                  <Button className="w-full bg-[#4CAF50] hover:bg-[#45a049]">Login</Button>
-                </div>
-              </div>
+              <SignIn routing="hash" appearance={{ variables: { colorPrimary: "#4CAF50" } }} />
             </TabsContent>
             <TabsContent value="register">
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <h1 className="text-2xl font-bold">Create an Account</h1>
-                  <p className="text-sm text-muted-foreground">Enter your details to create your account</p>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label htmlFor="register-email">Email</label>
-                    <Input id="register-email" type="email" placeholder="Enter your email" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="register-username">Username</label>
-                    <Input id="register-username" placeholder="Choose a username" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="register-password">Password</label>
-                    <Input id="register-password" type="password" placeholder="Choose a password" />
-                  </div>
-                  <Button className="w-full bg-[#4CAF50] hover:bg-[#45a049]">Register</Button>
-                </div>
-              </div>
+              <SignUp routing="hash" appearance={{ variables: { colorPrimary: "#4CAF50" } }} />
             </TabsContent>
           </Tabs>
         </div>
@@ -95,5 +58,13 @@ export default function Login() {
         </p>
       </motion.div>
     </>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginComponent />
+    </Suspense>
   );
 }
