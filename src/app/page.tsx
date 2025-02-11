@@ -33,7 +33,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full bg-background">
       <PageHeader />
 
       <main>
@@ -77,7 +77,9 @@ export default function Home() {
             >
               Our Features
             </motion.h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto ">
+
+            <div className="grid md:grid-cols-3 w-full gap-8 max-w-6xl mx-auto">
+
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
