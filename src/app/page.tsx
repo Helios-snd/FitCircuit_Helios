@@ -52,7 +52,7 @@ export default function Home() {
               AI-powered workout plans and nutrition guidance tailored to your goals
             </p>
             <Button asChild size="lg" className="bg-[#4CAF50] hover:bg-[#45a049] text-white px-8">
-              <Link href="/auth/login">
+              <Link href="/auth/login?tab=register">
                 Start Your Journey
                 <motion.span
                   className="ml-2"
