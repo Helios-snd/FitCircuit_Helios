@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   if (payload.type === "user.created" || payload.type === "user.updated") {
     await userModel.findOneAndUpdate(
       { clerkUserId: payload.data.id, username: payload.data.username, email: payload.data.email },
-      { $setOnInsert: { clerkUserId: payload.data.id } }, // Create if doesn't exist
+      { $setOnInsert: { clerkUserId: payload.data.id, username: payload.data.username, email: payload.data.emai } }, // Create if doesn't exist
       { upsert: true, new: true }
     );
   }
