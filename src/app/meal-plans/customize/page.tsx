@@ -12,7 +12,7 @@ export default function CustomizeMealPlan() {
   return (
     <div className="min-h-screen bg-background">
       <PageHeader />
-      <main className="container max-w-3xl py-6">
+      <main className="container max-w-3xl py-6 min-w-full px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
           <div className="text-center">
             <h1 className="text-2xl font-bold tracking-tight">Customize Your Meal Plan</h1>
