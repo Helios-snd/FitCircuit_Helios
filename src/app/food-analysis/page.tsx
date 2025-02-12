@@ -11,7 +11,7 @@ export default function FoodAnalysis() {
   return (
     <div className="min-h-screen bg-background">
       <PageHeader />
-      <main className="container py-6">
+      <main className="container py-6 px-6 min-w-full">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
           <h1 className="text-2xl font-bold tracking-tight">Food Analysis</h1>
 
