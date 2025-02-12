@@ -13,6 +13,7 @@ import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import type { WorkoutPreferences } from "@/types/workout"
+import { Toggle } from "@/components/ui/toggle"
 
 const goals = [
   { icon: Dumbbell, label: "Weight Loss" },
@@ -57,7 +58,7 @@ export default function CustomizeWorkoutPlan() {
 
   const getBMICategory = (bmi: number) => {
     if (bmi < 18.5) return "Underweight"
-    if (bmi < 25) return "Normal Weight"
+    if (bmi < 25) return "Normal"
     if (bmi < 30) return "Overweight"
     return "Obese"
   }
@@ -94,7 +95,10 @@ export default function CustomizeWorkoutPlan() {
                       key={goal.label}
                       type="button"
                       variant={preferences.goal === goal.label ? "default" : "outline"}
-                      className="justify-start gap-2"
+                      className={`justify-start gap-2 ${
+                        preferences.goal === goal.label ? "bg-gray-200 !important text-black" : "bg-transparent"
+                      }`}                    
+                    
                       onClick={() => handleGoalSelect(goal.label)}
                     >
                       <goal.icon className="h-4 w-4" />
@@ -148,7 +152,16 @@ export default function CustomizeWorkoutPlan() {
                     <p className="text-sm">
                       Your BMI: <span className="font-semibold">{calculateBMI()}</span>
                       {" - "}
-                      <span className="text-muted-foreground">{getBMICategory(Number(calculateBMI()))}</span>
+                      <span
+                        className={`text-muted-foreground px-2 py-1 rounded-full 
+                          ${
+                            getBMICategory(Number(calculateBMI())) === "Normal"
+                              ? "bg-green-200/50 text-green-700"
+                              : "bg-red-200/50 text-red-700"
+                          }`}
+                      >
+                        {getBMICategory(Number(calculateBMI()))}
+                      </span>
                     </p>
                   </div>
                 )}
@@ -157,7 +170,7 @@ export default function CustomizeWorkoutPlan() {
 
             {/* Training Duration & Equipment */}
             <Card>
-              <CardContent className="p-6 space-y-6">
+              <CardContent className="p-6 space-y-6  ">
                 <div>
                   <Label>Program Duration</Label>
                   <Select
@@ -167,7 +180,7 @@ export default function CustomizeWorkoutPlan() {
                     <SelectTrigger>
                       <SelectValue placeholder="Select duration" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-gray-100 text-black">
                       <SelectItem value="4 weeks">4 weeks</SelectItem>
                       <SelectItem value="8 weeks">8 weeks</SelectItem>
                       <SelectItem value="12 weeks">12 weeks</SelectItem>
@@ -224,7 +237,7 @@ export default function CustomizeWorkoutPlan() {
                   </div>
                 </div>
 
-                <div>
+                <div >
                   <Label>Weekly Frequency</Label>
                   <Select
                     value={preferences.weeklyFrequency}
@@ -233,7 +246,7 @@ export default function CustomizeWorkoutPlan() {
                     <SelectTrigger>
                       <SelectValue placeholder="Select frequency" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-gray-100 text-black">
                       <SelectItem value="1-2 times per week">1-2 times per week</SelectItem>
                       <SelectItem value="3-4 times per week">3-4 times per week</SelectItem>
                       <SelectItem value="5-6 times per week">5-6 times per week</SelectItem>
@@ -243,15 +256,22 @@ export default function CustomizeWorkoutPlan() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>No Rest Days</Label>
-                    <p className="text-sm text-muted-foreground">Recovery-focused training on rest days</p>
-                  </div>
-                  <Checkbox
-                    checked={preferences.noRestDays}
-                    onCheckedChange={(checked) => setPreferences((prev) => ({ ...prev, noRestDays: !!checked }))}
-                  />
-                </div>
+                <div className="space-y-0.5">
+          <Label>No Rest Days</Label>
+          <p className="text-sm text-muted-foreground">Recovery-focused training on rest days</p>
+        </div>
+        <Toggle
+          pressed={preferences.noRestDays}
+          onPressedChange={(pressed) => setPreferences((prev) => ({ ...prev, noRestDays: pressed }))}
+          className="w-12 h-6 rounded-full bg-gray-300 data-[state=on]:bg-gray-400 relative transition-all"
+        >
+          <span
+            className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow-md transition-transform ${
+              preferences.noRestDays ? "translate-x-6" : ""
+            }`}
+          />
+        </Toggle>
+        </div>
               </CardContent>
             </Card>
 
@@ -267,9 +287,11 @@ export default function CustomizeWorkoutPlan() {
                   ].map((intensity) => (
                     <Card
                       key={intensity.level}
-                      className={`cursor-pointer hover:bg-accent ${
-                        preferences.intensityLevel === intensity.level ? "border-primary" : ""
-                      }`}
+                      className={`cursor-pointer transition-all duration-300 ease-in-out hover:bg-accent hover:shadow-lg ${
+                        preferences.intensityLevel === intensity.level 
+                          ? "bg-gray-200/80 text-black scale-105 shadow-md" 
+                          : "bg-transparent"
+                      }`} 
                       onClick={() => setPreferences((prev) => ({ ...prev, intensityLevel: intensity.level as any }))}
                     >
                       <CardContent className="flex flex-col items-center p-4">
