@@ -6,12 +6,7 @@ import { Dumbbell, Utensils, Scale } from "lucide-react"
 import { PageHeader } from "@/components/ui/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-
-// const fadeIn = {
-//   initial: { opacity: 0, y: 20 },
-//   animate: { opacity: 1, y: 0 },
-//   transition: { duration: 0.5 },
-// }
+import { useAuth } from "@clerk/nextjs" // Clerk authentication
 
 const features = [
   {
@@ -32,6 +27,8 @@ const features = [
 ]
 
 export default function Home() {
+  const { isSignedIn } = useAuth() // Check if user is logged in
+
   return (
     <div className="min-h-screen w-full bg-background">
       <PageHeader />
@@ -52,7 +49,7 @@ export default function Home() {
               AI-powered workout plans and nutrition guidance tailored to your goals
             </p>
             <Button asChild size="lg" className="bg-[#4CAF50] hover:bg-[#45a049] text-white px-8">
-              <Link href="/auth/login?tab=register">
+              <Link href={isSignedIn ? "/workout-plans/customize" : "/auth/login?tab=register"}>
                 Start Your Journey
                 <motion.span
                   className="ml-2"
@@ -105,4 +102,3 @@ export default function Home() {
     </div>
   )
 }
-
