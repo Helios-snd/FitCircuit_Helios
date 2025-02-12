@@ -1,10 +1,13 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema({
-  clerkUserId: { type: String, required: true, unique: true },
-  username: { type: String, required: true },
-  email: { type: String },
-});
+const UserSchema = new Schema(
+  {
+    clerkUserId: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
+    email: { type: String },
+  },
+  { timestamps: true } // Automatically adds createdAt & updatedAt
+);
 
-export default model('User', UserSchema);
-
+const User = models.User || model("User", UserSchema); 
+export { User };
