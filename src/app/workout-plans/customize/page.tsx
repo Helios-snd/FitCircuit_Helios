@@ -287,9 +287,11 @@ export default function CustomizeWorkoutPlan() {
                   ].map((intensity) => (
                     <Card
                       key={intensity.level}
-                      className={`cursor-pointer hover:bg-accent ${
-                        preferences.intensityLevel === intensity.level ? "border-primary" : ""
-                      }`}
+                      className={`cursor-pointer transition-all duration-300 ease-in-out hover:bg-accent hover:shadow-lg ${
+                        preferences.intensityLevel === intensity.level 
+                          ? "bg-gray-200/80 text-black scale-105 shadow-md" 
+                          : "bg-transparent"
+                      }`} 
                       onClick={() => setPreferences((prev) => ({ ...prev, intensityLevel: intensity.level as any }))}
                     >
                       <CardContent className="flex flex-col items-center p-4">
