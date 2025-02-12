@@ -58,7 +58,7 @@ export default function CustomizeWorkoutPlan() {
 
   const getBMICategory = (bmi: number) => {
     if (bmi < 18.5) return "Underweight"
-    if (bmi < 25) return "Normal Weight"
+    if (bmi < 25) return "Normal"
     if (bmi < 30) return "Overweight"
     return "Obese"
   }
@@ -152,7 +152,16 @@ export default function CustomizeWorkoutPlan() {
                     <p className="text-sm">
                       Your BMI: <span className="font-semibold">{calculateBMI()}</span>
                       {" - "}
-                      <span className="text-muted-foreground">{getBMICategory(Number(calculateBMI()))}</span>
+                      <span
+                        className={`text-muted-foreground px-2 py-1 rounded-full 
+                          ${
+                            getBMICategory(Number(calculateBMI())) === "Normal"
+                              ? "bg-green-200/50 text-green-700"
+                              : "bg-red-200/50 text-red-700"
+                          }`}
+                      >
+                        {getBMICategory(Number(calculateBMI()))}
+                      </span>
                     </p>
                   </div>
                 )}
