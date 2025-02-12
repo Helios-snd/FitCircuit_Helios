@@ -36,4 +36,5 @@ const workoutPreferenceSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export default mongoose.model('WorkoutPreference', workoutPreferenceSchema);
+const WorkoutPreference = mongoose.models.WorkoutPreference || mongoose.model('WorkoutPreference', workoutPreferenceSchema);
+export { WorkoutPreference };

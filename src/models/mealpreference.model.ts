@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { models } from 'mongoose';
 
 const mealPreferenceSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -18,4 +18,5 @@ const mealPreferenceSchema = new mongoose.Schema({
     goal: { type: String, required: true } // User's meal planning goal
 }, { timestamps: true });
 
-export default mongoose.model('MealPreference', mealPreferenceSchema);
+const MealPreference = models.MealPreference ||  mongoose.model('MealPreference', mealPreferenceSchema);
+export { MealPreference };

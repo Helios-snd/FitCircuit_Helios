@@ -30,8 +30,6 @@ const workoutPlanSchema = new mongoose.Schema({
     weeks: [weekSchema],
 }, { timestamps: true });
 
-export default mongoose.model('WorkoutPlan', workoutPlanSchema);
-
 weekSchema.pre('save', function (next) {
     if (this.days.every(day => day.status === 'completed')) {
         this.status = 'completed';
@@ -40,3 +38,8 @@ weekSchema.pre('save', function (next) {
     }
     next();
 });
+
+const WorkoutPlan = mongoose.models.WorkoutPlan || mongoose.model('WorkoutPlan', workoutPlanSchema);
+export { WorkoutPlan };
+
+

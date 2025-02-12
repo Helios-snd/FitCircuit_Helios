@@ -11,8 +11,7 @@ export function PageHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-
-      <div className="container flex h-14 items-center min-w-full px-3">
+      <div className="container flex h-14 items-center min-w-full px-2">
         <Link href="/" className="flex items-center space-x-2 pl-3">
           <Dumbbell className="h-6 w-6 text-[#4CAF50]" />
           <span className="font-bold">FitCircuit</span>
