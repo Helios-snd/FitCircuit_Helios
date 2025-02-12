@@ -58,7 +58,7 @@ export default function CustomizeMealPlan() {
               <div>
                 <h2 className="font-semibold mb-4">Caloric Intake Goal</h2>
                 <div className="space-y-4">
-                  <Slider defaultValue={[2000]} max={4000} min={1200} step={100} />
+                  <Slider defaultValue={[2000]} max={4000} min={1200} step={100} className="bg-gray-700 rounded-full" />
                   <div className="flex justify-between text-sm text-muted-foreground">
                     <span>1200 kcal</span>
                     <span>4000 kcal</span>
