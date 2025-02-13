@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true, // Enables React Strict Mode for better debugging and catching potential issues
-  swcMinify: true, // Uses SWC compiler for faster builds and better minification
+  //clswcMinify: true, // Uses SWC compiler for faster builds and better minification
 
   images: {
     domains: ["your-image-domain.com", "res.cloudinary.com"], // Allows optimized images from these domains
