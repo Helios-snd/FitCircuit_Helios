@@ -29,7 +29,8 @@ export default function LoadingAnimation() {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-background z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-background z-50"
+    >
       <div className="animate__animated animate__backInUp text-4xl font-bold">
       FitCircuit
       </div>

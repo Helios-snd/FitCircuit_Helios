@@ -6,7 +6,7 @@ import { Check, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { PageHeader } from "@/components/ui/page-header"
-import type { WorkoutPlan, Exercise } from "@/types/workout"
+import type { WorkoutPlan, Exercise, WorkoutDay, DayWorkout  } from "@/types/workout"
 
 const mockWorkoutPlan: WorkoutPlan = {
   currentWeek: 3,
@@ -63,6 +63,51 @@ const mockWorkoutPlan: WorkoutPlan = {
   ],
 }
 
+const exerciseData: Record<number, Exercise[]> = {
+  1: [
+    { id: "1", name: "Push-ups", sets: 3, reps: 15, muscles: ["Chest", "Arms"], imageUrl: "/placeholder.svg" },
+    { id: "2", name: "Pull-ups", sets: 3, reps: 10, muscles: ["Back", "Arms"], imageUrl: "/placeholder.svg" },
+    { id: "3", name: "Dumbbell Bench Press", sets: 4, reps: 12, muscles: ["Chest", "Triceps"], imageUrl: "/placeholder.svg" },
+    { id: "4", name: "Tricep Dips", sets: 3, reps: 12, muscles: ["Triceps"], imageUrl: "/placeholder.svg" },
+  ],
+  2: [
+    { id: "5", name: "Squats", sets: 4, reps: 12, muscles: ["Legs", "Glutes"], imageUrl: "/placeholder.svg" },
+    { id: "6", name: "Lunges", sets: 3, reps: 12, muscles: ["Legs"], imageUrl: "/placeholder.svg" },
+    { id: "7", name: "Leg Press", sets: 3, reps: 15, muscles: ["Legs", "Calves"], imageUrl: "/placeholder.svg" },
+    { id: "8", name: "Calf Raises", sets: 4, reps: 20, muscles: ["Calves"], imageUrl: "/placeholder.svg" },
+  ],
+  3: [
+    { id: "9", name: "Deadlifts", sets: 4, reps: 10, muscles: ["Back", "Legs"], imageUrl: "/placeholder.svg" },
+    { id: "10", name: "Bent-over Rows", sets: 3, reps: 12, muscles: ["Back", "Biceps"], imageUrl: "/placeholder.svg" },
+    { id: "11", name: "Lat Pulldown", sets: 3, reps: 15, muscles: ["Back"], imageUrl: "/placeholder.svg" },
+    { id: "12", name: "Face Pulls", sets: 3, reps: 12, muscles: ["Shoulders"], imageUrl: "/placeholder.svg" },
+  ],
+  4: [
+    { id: "13", name: "Bicep Curls", sets: 3, reps: 15, muscles: ["Biceps"], imageUrl: "/placeholder.svg" },
+    { id: "14", name: "Hammer Curls", sets: 3, reps: 12, muscles: ["Biceps", "Forearms"], imageUrl: "/placeholder.svg" },
+    { id: "15", name: "Preacher Curls", sets: 3, reps: 12, muscles: ["Biceps"], imageUrl: "/placeholder.svg" },
+    { id: "16", name: "Wrist Curls", sets: 3, reps: 15, muscles: ["Forearms"], imageUrl: "/placeholder.svg" },
+  ],
+  5: [
+    { id: "17", name: "Overhead Shoulder Press", sets: 3, reps: 12, muscles: ["Shoulders", "Triceps"], imageUrl: "/placeholder.svg" },
+    { id: "18", name: "Lateral Raises", sets: 3, reps: 15, muscles: ["Shoulders"], imageUrl: "/placeholder.svg" },
+    { id: "19", name: "Front Raises", sets: 3, reps: 12, muscles: ["Shoulders"], imageUrl: "/placeholder.svg" },
+    { id: "20", name: "Shrugs", sets: 4, reps: 15, muscles: ["Traps"], imageUrl: "/placeholder.svg" },
+  ],
+  6: [
+    { id: "21", name: "Russian Twists", sets: 3, reps: 20, muscles: ["Core"], imageUrl: "/placeholder.svg" },
+    { id: "22", name: "Planks", sets: 3, reps: 60, muscles: ["Core"], imageUrl: "/placeholder.svg" },
+    { id: "23", name: "Leg Raises", sets: 3, reps: 15, muscles: ["Core"], imageUrl: "/placeholder.svg" },
+    { id: "24", name: "Bicycle Crunches", sets: 3, reps: 20, muscles: ["Core"], imageUrl: "/placeholder.svg" },
+  ],
+  7: [
+    { id: "25", name: "Jump Rope", sets: 3, reps: 2, muscles: ["Cardio"], imageUrl: "/placeholder.svg" },
+    { id: "26", name: "Rowing Machine", sets: 3, reps: 5, muscles: ["Cardio"], imageUrl: "/placeholder.svg" },
+    { id: "27", name: "Burpees", sets: 3, reps: 12, muscles: ["Full Body"], imageUrl: "/placeholder.svg" },
+    { id: "28", name: "Mountain Climbers", sets: 3, reps: 20, muscles: ["Full Body"], imageUrl: "/placeholder.svg" },
+  ],
+};
+
 const todaysExercises: Exercise[] = [
   {
     id: "1",
@@ -83,20 +128,61 @@ const todaysExercises: Exercise[] = [
 ]
 
 export default function WorkoutPlans() {
-  const [workoutPlan] = useState<WorkoutPlan>(mockWorkoutPlan)
+   const [workoutPlan] = useState<WorkoutPlan>(mockWorkoutPlan)
   const [completedExercises, setCompletedExercises] = useState<Set<string>>(new Set())
+  const [selectedDayExercises, setSelectedDayExercises] = useState<Exercise[]>(todaysExercises); // Default to today's exercises
+  
+  const [completedExercisesByDay, setCompletedExercisesByDay] = useState<Record<string, Set<string>>>({});
 
+  const [selectedDay, setSelectedDay] = useState<{ day: number } | null>({ day: 0 });
+
+  
+
+
+
+  const handleDayClick = (day: DayWorkout) => {
+    setSelectedDayExercises(exerciseData[day.day] || []);
+  };
+
+ 
   const toggleExercise = (id: string) => {
     setCompletedExercises((prev) => {
-      const newSet = new Set(prev)
+      const newSet = new Set(prev);
       if (newSet.has(id)) {
-        newSet.delete(id)
+        newSet.delete(id);
       } else {
-        newSet.add(id)
+        newSet.add(id);
       }
-      return newSet
-    })
+      return newSet;
+    });
+  
+  
+  
+setCompletedExercisesByDay((prev) => {
+  if (!selectedDay?.day) return prev; // Ensure selectedDay exists
+
+  const dayKey = selectedDay.day;
+  const updatedSet = new Set(prev[dayKey] || []);
+
+  if (updatedSet.has(id)) {
+    updatedSet.delete(id);
+  } else {
+    updatedSet.add(id);
   }
+
+  return { ...prev, [dayKey]: updatedSet };
+});
+  }
+  
+  const isDayCompleted = (day: DayWorkout) => {
+   if (!selectedDay) return false; // Prevent errors
+     const dayKey = selectedDay.day;
+    const completedSet = completedExercisesByDay[dayKey] || new Set();
+    
+    return todaysExercises.length > 0 && todaysExercises.every(ex => completedSet.has(ex.id));
+  };
+  
+  
 
   return (
     <div className="min-h-screen bg-background min-w-full">
@@ -136,32 +222,72 @@ export default function WorkoutPlans() {
           </div>
 
           {/* Daily Workouts */}
-          <div className="grid gap-4 md:grid-cols-4">
-            {workoutPlan.progress[2].days.map((day) => (
-              <Card key={day.day} className={day.status === "in-progress" ? "border-primary" : ""}>
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-semibold">Day {day.day}</h3>
-                      <p className="text-sm text-muted-foreground">{day.type}</p>
-                    </div>
-                    {day.status === "completed" && <Check className="text-green-500" />}
-                    {day.status === "in-progress" && <Clock className="text-blue-500" />}
-                  </div>
-                  <div className="space-y-1 text-sm text-muted-foreground">
-                    <p>{day.exercises} exercises</p>
-                    <p>{day.duration} minutes</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        
 
-          {/* Today's Workout */}
+ <div className="grid gap-4 md:grid-cols-4">
+  {/* {workoutPlan.progress[2].days.map((day) => {
+    const dayExercises = exerciseData[day.day] || [];
+    const completedExercisesCount = completedExercisesByDay[day.day]?.size || 0;
+    const allExercisesCompleted = dayExercises.length > 0 && completedExercisesCount === dayExercises.length;
+
+    return (
+      <Card key={day.day} onClick={() => handleDayClick(day)} className={allExercisesCompleted ? "border-green-500" : "border-primary"}>
+        <CardContent className="p-4">
+          <div className="flex justify-between items-start mb-2">
+            <div>
+              <h3 className="font-semibold">Day {day.day} </h3>
+              <p className="text-sm text-muted-foreground">{day.type}</p>
+            </div>
+            {allExercisesCompleted ? <Check className="text-green-500" /> : <Clock className="text-blue-500" />}
+              console.log("Day:", day.day, "Exercises:", dayExercises, "Completed:", completedExercisesByDay[day.day]);  
+
+          </div>
+          <div className="space-y-1 text-sm text-muted-foreground">
+            <p>{day.exercises} exercises</p>
+            <p>{day.duration} minutes</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  })} */}
+  {workoutPlan.progress[2].days.map((day) => {
+  const dayExercises = exerciseData[day.day] || [];
+  const completedExercisesCount = completedExercisesByDay[day.day]?.size || 0;
+  const allExercisesCompleted = dayExercises.length > 0 && completedExercisesCount === dayExercises.length;
+    
+
+
+  return (
+    <Card key={day.day} onClick={() => handleDayClick(day)} className={allExercisesCompleted ? "border-green-500" : "border-primary"}>
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
           <div>
+            <h3 className="font-semibold">Day {day.day}</h3>
+            <p className="text-sm text-muted-foreground">{day.type}</p>
+          </div>
+          {/* {allExercisesCompleted ? <Check className="text-green-500" /> : <Clock className="text-blue-500" />} */}
+          {isDayCompleted(day) ? (
+  <Check className="text-green-500" />
+) : (
+  <Clock className="text-blue-500" />
+)}
+        </div>
+        <div className="space-y-1 text-sm text-muted-foreground">
+          <p>{dayExercises.length} exercises</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+})}
+
+</div> 
+
+
+    {/* Today's Workout (Now updates based on selected day) */}
+    <div>
             <h2 className="text-xl font-semibold mb-4">Today's Workout</h2>
             <div className="space-y-4">
-              {todaysExercises.map((exercise) => (
+              {selectedDayExercises.map((exercise) => (
                 <Card key={exercise.id} className={completedExercises.has(exercise.id) ? "bg-muted" : ""}>
                   <CardContent className="p-4">
                     <div className="flex gap-4">
@@ -192,7 +318,7 @@ export default function WorkoutPlans() {
               ))}
             </div>
           </div>
-
+        
           {/* Progress Footer */}
           <div className="flex justify-between items-center pt-4 border-t">
             <div className="space-y-1">
@@ -208,4 +334,7 @@ export default function WorkoutPlans() {
     </div>
   )
 }
+
+
+
 

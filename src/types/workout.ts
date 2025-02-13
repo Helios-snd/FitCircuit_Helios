@@ -7,7 +7,17 @@ export interface Exercise {
   reps: number
   muscles: string[]
   imageUrl: string
+
 }
+
+export type WorkoutDay = {
+  day: number;
+  type: string;
+  exercises: Exercise[];  // Ensure Exercise type exists
+  duration: number;
+  status: "completed" | "in-progress" | "upcoming";
+};
+
 
 export interface DayWorkout {
   day: number
